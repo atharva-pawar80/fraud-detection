@@ -26,7 +26,7 @@ def prepared_data(df):
 def train_and_evaluate_model(train_x, test_x, train_y, test_y):
     
 
-    model = RandomForestClassifier(random_state=42,n_jobs=1)
+    model = RandomForestClassifier(random_state=42,n_jobs=-1)
     model.fit(train_x, train_y)
 
     predictions = model.predict(test_x)
@@ -40,4 +40,8 @@ if __name__ == "__main__":
     df = load_data('data/fraud_cleaned.csv')
     train_x,test_x,train_y,test_y = prepared_data(df)
     accuracy, report = train_and_evaluate_model(train_x, test_x, train_y, test_y)
-    
+    print(accuracy)
+    print(report)
+
+
+
