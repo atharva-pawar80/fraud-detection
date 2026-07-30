@@ -33,6 +33,8 @@ def train_and_evaluate_model(train_x, test_x, train_y, test_y):
         accuracy = accuracy_score(test_y, predictions)
         report = classification_report(test_y, predictions)
 
+        mlflow.log_metric("accuracy", accuracy)
+
     return accuracy, report
 
 
