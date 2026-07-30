@@ -3,6 +3,7 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+import mlflow
 
 
 
@@ -24,14 +25,13 @@ def prepared_data(df):
 
 
 def train_and_evaluate_model(train_x, test_x, train_y, test_y):
-    
+    with mlflow.start_run():
+        model = RandomForestClassifier(random_state=42,n_jobs=-1)
+        model.fit(train_x, train_y)
 
-    model = RandomForestClassifier(random_state=42,n_jobs=-1)
-    model.fit(train_x, train_y)
-
-    predictions = model.predict(test_x)
-    accuracy = accuracy_score(test_y, predictions)
-    report = classification_report(test_y, predictions)
+        predictions = model.predict(test_x)
+        accuracy = accuracy_score(test_y, predictions)
+        report = classification_report(test_y, predictions)
 
     return accuracy, report
 
