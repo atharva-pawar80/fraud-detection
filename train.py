@@ -34,3 +34,10 @@ def train_and_evaluate_model(train_x, test_x, train_y, test_y):
     report = classification_report(test_y, predictions)
 
     return accuracy, report
+
+
+if __name__ == "__main__":
+    df = load_data('data/fraud_cleaned.csv')
+    train_x,test_x,train_y,test_y = prepared_data(df)
+    accuracy, report = train_and_evaluate_model(train_x, test_x, train_y, test_y)
+    
