@@ -29,6 +29,8 @@ def train_and_evaluate_model(train_x, test_x, train_y, test_y):
         model = RandomForestClassifier(random_state=42,n_jobs=-1)
         model.fit(train_x, train_y)
 
+        mlflow.log_param('n_estimators',100)
+        mlflow.log_param("Random_state", 42)
         predictions = model.predict(test_x)
         accuracy = accuracy_score(test_y, predictions)
         report = classification_report(test_y, predictions,output_dict=True)
