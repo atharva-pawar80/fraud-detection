@@ -4,6 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import mlflow
+import joblib
 
 
 
@@ -39,6 +40,8 @@ def train_and_evaluate_model(train_x, test_x, train_y, test_y):
         mlflow.log_metric("fraud_f1",report['1']['f1-score'])
 
         mlflow.log_metric("accuracy", accuracy,)
+
+        joblib.dump(model,'fraud_detection.pkl')
 
     return accuracy, report
 
