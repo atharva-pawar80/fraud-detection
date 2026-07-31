@@ -32,6 +32,9 @@ def train_and_evaluate_model(train_x, test_x, train_y, test_y):
         predictions = model.predict(test_x)
         accuracy = accuracy_score(test_y, predictions)
         report = classification_report(test_y, predictions,output_dict=True)
+        mlflow.log_metric("fraud_precision",report['1']['precision'])
+        mlflow.log_metric("fraud_recall", report['1']['recall'])
+        mlflow.log_metric("fraud_f1",report['1']['f1-score'])
 
         mlflow.log_metric("accuracy", accuracy,)
 
