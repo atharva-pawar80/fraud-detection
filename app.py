@@ -17,10 +17,13 @@ class Transaction(BaseModel):
 
 
 @app.post("/predict")
-def predict(transacrion: Transaction):
+def predict(transaction: Transaction):
 
-    row =[transacrion.Time] + transacrion.V_features +[transacrion.Amount]
+    row =[transaction.Time] + transaction.V_features +[transaction.Amount]
 
-    prediction = model.predcit([row][0])
+    prediction = model.predict([row])[0]
 
-    return {"is_fraud": bool(predict)}
+    return {"is_fraud": bool(prediction)}
+
+
+

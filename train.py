@@ -20,7 +20,7 @@ df = load_data('data/fraud_cleaned.csv')
 def prepared_data(df):
 
     y = df['__FeatEng_target__']
-    X = df.drop('__FeatEng_target__', axis=1)
+    X = df.drop(['__FeatEng_target__', '__index_level_0__'], axis=1)
     train_x, test_x,train_y,test_y =train_test_split(X,y,test_size=0.2,random_state=42,stratify=y)
     return train_x, test_x, train_y, test_y 
 
