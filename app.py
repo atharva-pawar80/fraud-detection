@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
 from fastapi.responses import HTMLResponse
+import json
+from datetime import datetime
 
 
 model = joblib.load('fraud_detection.pkl')
@@ -19,12 +21,28 @@ class Transaction(BaseModel):
 
 @app.post("/predict")
 def predict(transaction: Transaction):
-
-    row =[transaction.Time] + transaction.V_features +[transaction.Amount]
-
+    row = [transaction.Time] + transaction.V_features + [transaction.Amount]
     prediction = model.predict([row])[0]
+    result = bool(prediction)
 
-    return {"is_fraud": bool(prediction)}
+    
+    log_entry = {
+        "timestamp": str(datetime.now()),
+        "input": row,
+        "prediction": result
+    }
+    with open("predictions.log", "a") as f:
+        f.write(json.dumps(log_entry) + "\n")
+
+    return {"is_fraud": result}
+
+    
+            
+
+        
+
+
+
 
 @app.get("/", response_class=HTMLResponse)
 def home():
